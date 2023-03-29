@@ -111,6 +111,27 @@ function LinkedList() {
         return returnString;
 	}
 
+    function insertAt(value, index) {
+        if(index > this.size())
+            console.log('index is larger than list size');
+        else if(index === this.size()) {
+            this.append(value);
+        } else if(index === 0) {
+            this.prepend(value);
+        } else {
+            let prev = headNode;
+            let temp = headNode.next;
+            index--;
+            while(index > 0) {
+                prev = prev.next;
+                temp = temp.next;
+                index--;
+            }
+            prev.next = value;
+            value.next = temp;
+        }
+    }
+
 	return {
 		append,
 		prepend,
@@ -121,7 +142,8 @@ function LinkedList() {
 		pop,
 		contains,
 		find,
-		toString
+		toString,
+        insertAt
 	};
 }
 
@@ -139,7 +161,8 @@ const nodeFactory = (value) => {
 let node1 = nodeFactory(1);
 let node2 = nodeFactory(2);
 let node3 = nodeFactory(3);
-let nodePop = nodeFactory('pop');
+let pop = nodeFactory('pop');
+let insert = nodeFactory('insert');
 let list = LinkedList();
 list.append(node2);
 list.append(node3);
@@ -151,7 +174,7 @@ console.log('tail(): ' + list.tail());
 console.log('list.at(0): ' + list.at(0));
 console.log('list.at(1): ' + list.at(1));
 console.log('list.at(2): ' + list.at(2));
-list.append(nodePop);
+list.append(pop);
 console.log('before pop: ' + list.toString());
 list.pop();
 console.log('after pop: ' + list.toString());
@@ -159,3 +182,5 @@ console.log('contains 3: ' + list.contains(3));
 console.log('contains x: ' + list.contains('x'));
 console.log('find 3: ' + list.find(3));
 console.log('find x: ' + list.find('x'));
+list.insertAt(insert, 2);
+console.log(list.toString());
