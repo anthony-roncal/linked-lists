@@ -132,6 +132,26 @@ function LinkedList() {
         }
     }
 
+    function removeAt(index) {
+        if(index > this.size())
+            console.log('index is larger than list size');
+        else if(index === this.size()) {
+            this.pop();
+        } else if(index === 0) {
+            headNode = headNode.next;
+        } else {
+            let prev = headNode;
+            let temp = headNode.next;
+            index--;
+            while(index > 0) {
+                prev = prev.next;
+                temp = temp.next;
+                index--;
+            }
+            prev.next = temp.next;
+        }
+    }
+
 	return {
 		append,
 		prepend,
@@ -143,7 +163,8 @@ function LinkedList() {
 		contains,
 		find,
 		toString,
-        insertAt
+        insertAt,
+        removeAt
 	};
 }
 
@@ -171,16 +192,19 @@ console.log('toString(): ' + list.toString());
 console.log('size(): ' + list.size());
 console.log('head(): ' + list.head());
 console.log('tail(): ' + list.tail());
-console.log('list.at(0): ' + list.at(0));
-console.log('list.at(1): ' + list.at(1));
-console.log('list.at(2): ' + list.at(2));
+console.log('at(0): ' + list.at(0));
+console.log('at(1): ' + list.at(1));
+console.log('at(2): ' + list.at(2));
 list.append(pop);
 console.log('before pop: ' + list.toString());
 list.pop();
 console.log('after pop: ' + list.toString());
 console.log('contains 3: ' + list.contains(3));
 console.log('contains x: ' + list.contains('x'));
-console.log('find 3: ' + list.find(3));
-console.log('find x: ' + list.find('x'));
+console.log('find 3 //2: ' + list.find(3));
+console.log('find x //null: ' + list.find('x'));
+console.log('before insert: ' + list.toString());
 list.insertAt(insert, 2);
+console.log('after insert: ' + list.toString());
+list.removeAt(2);
 console.log(list.toString());
